@@ -27,6 +27,7 @@ class ArticlesController extends AppController {
         // populate the entity
         if($this->request->is('post')) {
             $article = $this->Articles->patchEntity($article, $this->request->getData());
+            $article->slug = $this->request->getData('title') . rand(); // make slug unique 
             $article->user_id = 1; // not used yet
             if($this->Articles->save($article)) { 
                 $this->Flash->success('Article has been saved. ');
@@ -37,7 +38,8 @@ class ArticlesController extends AppController {
             }
         // else not a post request
         }
-
+        
         $this->set('article', $article); 
+        
     }
 }
